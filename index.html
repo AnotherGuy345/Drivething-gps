@@ -1,28 +1,14 @@
 <!DOCTYPE html>
-<style>
-  #map {
-  height: 500px;
-  width: 100%;
-  display: block;
-}
-body {
-  background: #111;
-  color: white;
-  font-family: Arial, sans-serif;
-  text-align: center;
-}
-
-button {
-  padding: 15px;
-  font-size: 18px;
-  border-radius: 10px;
-}
-</style><html lang="en">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>DriveThing GPS</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
 
   <style>
     * {
@@ -31,9 +17,9 @@ button {
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       background: #111;
       color: white;
+      font-family: Arial, sans-serif;
       text-align: center;
     }
 
@@ -52,152 +38,120 @@ button {
       color: #aaa;
     }
 
-    .map {
-      height: 55vh;
-      min-height: 300px;
-      background: #333;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
+    #map {
+      height: 60vh;
+      min-height: 350px;
+      width: 100%;
     }
 
     .controls {
-      padding: 20px;
+      padding: 18px;
       background: #1c1c1c;
     }
 
     button {
       width: 100%;
       padding: 16px;
-      margin-top: 10px;
-      border: none;
+      border: 0;
       border-radius: 10px;
       font-size: 18px;
-      cursor: pointer;
-    }
-
-    .gps-button {
-      background: #fff;
+      background: white;
       color: #111;
     }
 
     .location {
-      margin-top: 15px;
-      font-size: 14px;
+      margin-top: 12px;
       color: #aaa;
+      font-size: 14px;
     }
   </style>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
-  <body>
+<body>
 
   <div class="top">
     <h1>🚗 DriveThing GPS</h1>
     <div class="status">BridgeThing Navigation</div>
   </div>
 
-  <div class="map">
-    <div id="map" style="height: 500px; width: 100%;"></div>
-  </div>
+  <div id="map"></div>
 
   <div class="controls">
-
-    <button class="gps-button" onclick="getLocation()">
+    <button id="gpsButton">
       📍 Get My Location
     </button>
 
     <div class="location" id="location">
       GPS location not available yet.
     </div>
-
   </div>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   <script>
+    const map = L.map("map").setView([35.2271, -80.8431], 10);
 
-    function getLocation() {
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(map);
 
-  const locationText = document.getElementById("location");
+    let currentMarker = null;
 
-  if (!navigator.geolocation) {
-    locationText.textContent =
-      "GPS is not supported by this browser.";
-    return;
-  }
+    const gpsButton = document.getElementById("gpsButton");
+    const locationText = document.getElementById("location");
 
-  locationText.textContent =
-    "Finding your location...";
+    gpsButton.addEventListener("click", function () {
 
-  navigator.geolocation.getCurrentPosition(
-
-    function(position) {
-
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-
-      locationText.textContent =
-        "Location found!";
-
-      map.setView([latitude, longitude], 15);
-
-      L.marker([latitude, longitude])
-        .addTo(map)
-        .bindPopup("You are here")
-        .openPopup();
-
-    },
-
-    function() {
-
-      locationText.textContent =
-        "Unable to get your location. Please allow GPS access.";
-
-    }
-
-  );
-}
+      if (!navigator.geolocation) {
+        locationText.textContent =
+          "GPS is not supported by this browser.";
+        return;
+      }
 
       locationText.textContent =
         "Finding your location...";
 
       navigator.geolocation.getCurrentPosition(
 
-        function(position) {
+        function (position) {
 
-          const latitude =
-            position.coords.latitude;
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
 
-          const longitude =
-            position.coords.longitude;
+          map.setView([latitude, longitude], 16);
+
+          if (currentMarker) {
+            map.removeLayer(currentMarker);
+          }
+
+          currentMarker = L.marker([
+            latitude,
+            longitude
+          ]).addTo(map);
+
+          currentMarker
+            .bindPopup("You are here")
+            .openPopup();
 
           locationText.textContent =
-            "Latitude: " + latitude.toFixed(6) +
-            " | Longitude: " + longitude.toFixed(6);
-
+            "GPS location found.";
         },
 
-        function() {
+        function (error) {
 
           locationText.textContent =
-            "Unable to get your location. Please allow GPS access.";
+            "GPS error: " + error.message;
+        },
 
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
         }
 
       );
-
-    }
-
+    });
   </script>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<script>
-const map = L.map('map').setView([35.2271, -80.8431], 10);
-
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
-</script>
-  </body>
+</body>
 </html>
