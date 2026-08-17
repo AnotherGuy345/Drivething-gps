@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DriveThing GPS</title>
+</head>
+
+<body>
+  <h1>DriveThing GPS</h1>
+
+  <p>BridgeThing navigation system</p>
+
+  <button onclick="getLocation()">Get My Location</button>
+
+  <p id="location">Location not available yet.</p>
+
+  <script>
+    function getLocation() {
+      const locationText = document.getElementById("location");
+
+      if (!navigator.geolocation) {
+        locationText.textContent = "GPS is not supported by this browser.";
+        return;
+      }
+
+      locationText.textContent = "Finding your location...";
+
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          locationText.textContent =
+            "Latitude: " + latitude +
+            " | Longitude: " + longitude;
+        },
+        function() {
+          locationText.textContent =
+            "Unable to get your location. Please allow GPS access.";
+        }
+      );
+    }
+  </script>
+</body>
+</html>
