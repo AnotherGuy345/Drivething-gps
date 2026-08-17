@@ -1,46 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
+<style>
+body {
+  background: #111;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+button {
+  padding: 15px;
+  font-size: 18px;
+  border-radius: 10px;
+}
+</style><html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>DriveThing GPS</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      text-align: center;
+    }
+
+    .top {
+      padding: 18px;
+      background: #1c1c1c;
+    }
+
+    .top h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .status {
+      margin-top: 6px;
+      color: #aaa;
+    }
+
+    .map {
+      height: 55vh;
+      min-height: 300px;
+      background: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .controls {
+      padding: 20px;
+      background: #1c1c1c;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .gps-button {
+      background: #fff;
+      color: #111;
+    }
+
+    .location {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #aaa;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>DriveThing GPS</h1>
 
-  <p>BridgeThing navigation system</p>
+  <div class="top">
+    <h1>🚗 DriveThing GPS</h1>
+    <div class="status">BridgeThing Navigation</div>
+  </div>
 
-  <button onclick="getLocation()">Get My Location</button>
+  <div class="map">
+    🗺️ MAP
+  </div>
 
-  <p id="location">Location not available yet.</p>
+  <div class="controls">
+
+    <button class="gps-button" onclick="getLocation()">
+      📍 Get My Location
+    </button>
+
+    <div class="location" id="location">
+      GPS location not available yet.
+    </div>
+
+  </div>
 
   <script>
+
     function getLocation() {
-      const locationText = document.getElementById("location");
+
+      const locationText =
+        document.getElementById("location");
 
       if (!navigator.geolocation) {
-        locationText.textContent = "GPS is not supported by this browser.";
+
+        locationText.textContent =
+          "GPS is not supported by this browser.";
+
         return;
       }
 
-      locationText.textContent = "Finding your location...";
+      locationText.textContent =
+        "Finding your location...";
 
       navigator.geolocation.getCurrentPosition(
+
         function(position) {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
+
+          const latitude =
+            position.coords.latitude;
+
+          const longitude =
+            position.coords.longitude;
 
           locationText.textContent =
-            "Latitude: " + latitude +
-            " | Longitude: " + longitude;
+            "Latitude: " + latitude.toFixed(6) +
+            " | Longitude: " + longitude.toFixed(6);
+
         },
+
         function() {
+
           locationText.textContent =
             "Unable to get your location. Please allow GPS access.";
+
         }
+
       );
+
     }
+
   </script>
+
 </body>
 </html>
