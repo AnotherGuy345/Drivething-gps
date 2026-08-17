@@ -118,16 +118,45 @@ button {
 
     function getLocation() {
 
-      const locationText =
-        document.getElementById("location");
+  const locationText = document.getElementById("location");
 
-      if (!navigator.geolocation) {
+  if (!navigator.geolocation) {
+    locationText.textContent =
+      "GPS is not supported by this browser.";
+    return;
+  }
 
-        locationText.textContent =
-          "GPS is not supported by this browser.";
+  locationText.textContent =
+    "Finding your location...";
 
-        return;
-      }
+  navigator.geolocation.getCurrentPosition(
+
+    function(position) {
+
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      locationText.textContent =
+        "Location found!";
+
+      map.setView([latitude, longitude], 15);
+
+      L.marker([latitude, longitude])
+        .addTo(map)
+        .bindPopup("You are here")
+        .openPopup();
+
+    },
+
+    function() {
+
+      locationText.textContent =
+        "Unable to get your location. Please allow GPS access.";
+
+    }
+
+  );
+}
 
       locationText.textContent =
         "Finding your location...";
