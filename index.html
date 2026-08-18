@@ -329,19 +329,7 @@ recalculateButton.addEventListener(
 
 
 
-    const destination =
-      destinationMarker.getLatLng();
-
-    locationText.textContent =
-      "🔄 Recalculating from your current location...";
-
-    drawRoute(
-      destination.lat,
-      destination.lng
-    );
-
-  }
-);
+    
 
     const locationText =
       document.getElementById("location");
@@ -1208,16 +1196,7 @@ function speak(text) {
   
  
 
-    const destination =
-      destinationMarker.getLatLng();
-
-    drawRoute(
-      destination.lat,
-      destination.lng
-    );
-
-  }
-); function checkActualRoute() {
+ function checkActualRoute() {
 
   if (!autoReroute) {
     return;
