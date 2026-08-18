@@ -958,100 +958,76 @@ lastRouteLongitude =
       turnLongitude
     );
 
+  let instruction =
+    getInstructionText(step);
+
   if (distance < 100) {
 
-  if (
-    currentStepIndex <
-    routeSteps.length - 1
-  ) {
+    if (
+      currentStepIndex <
+      routeSteps.length - 1
+    ) {
 
-    currentStepIndex++;
+      currentStepIndex++;
 
-    showNextTurn();
+      showNextTurn();
 
-    const nextStep =
-      routeSteps[currentStepIndex];
+      const nextStep =
+        routeSteps[currentStepIndex];
 
-    if (voiceEnabled) {
+      if (
+        voiceEnabled &&
+        lastSpokenStep !== currentStepIndex
+      ) {
 
-      const nextDistanceFeet =
-        Math.round(
-          nextStep.distance * 3.28084
+        const nextDistanceFeet =
+          Math.round(
+            nextStep.distance * 3.28084
+          );
+
+        speak(
+          getInstructionText(nextStep) +
+          " in " +
+          nextDistanceFeet +
+          " feet."
         );
 
-      speak(
-        getInstructionText(nextStep) +
-        " in " +
-        nextDistanceFeet +
-        " feet."
-      );
+        lastSpokenStep =
+          currentStepIndex;
+      }
 
     }
 
+    return;
   }
 
-  return;
-}
-    if (distance <= 500) {
-      if (voiceEnabled) {
-  speak(instruction);
-}
+  let distanceText;
 
-  const maneuver =
-    step.maneuver;
+  if (distance >= 5280) {
 
-  let instruction =
-    "Continue";
+    distanceText =
+      (
+        distance / 5280
+      ).toFixed(1) +
+      " mi";
 
-  if (maneuver.type === "turn") {
+  } else {
 
-    instruction =
-      "Turn " +
-      (maneuver.modifier || "") +
-      " onto " +
-      (step.name || "the road");
-
-  }
-
-  else if (maneuver.type === "roundabout") {
-
-    instruction =
-      "Enter the roundabout";
-
-  }
-
-  else if (maneuver.type === "arrive") {
-
-    instruction =
-      "You have arrived";
+    distanceText =
+      Math.round(distance) +
+      " ft";
 
   }
 
   nextTurn.innerHTML =
-    "⚠️ " +
+    "🧭 " +
     instruction +
     "<br>" +
     "<span style='font-size:16px;font-weight:normal;'>" +
-    Math.round(distance) +
-    " ft</span>";
-      if (
-  voiceEnabled &&
-  lastSpokenStep !== currentStepIndex
-) {
+    distanceText +
+    " to next maneuver" +
+    "</span>";
 
-  speak(
-    instruction +
-    " in " +
-    Math.round(distance) +
-    " feet"
-  );
-
-  lastSpokenStep =
-    currentStepIndex;
-
-}
-
-}
 }
 
 
