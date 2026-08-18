@@ -1284,8 +1284,17 @@ function speak(text) {
 
   if (closestDistance > 500) {
 
+    offRouteCount++;
+
     locationText.textContent =
-      "🔄 You may be off route.";
+      "🔄 Checking route...";
+
+  } else {
+
+    offRouteCount = 0;
+
+    locationText.textContent =
+      "On route.";
 
   }
 
