@@ -678,7 +678,20 @@
 
         showNextTurn();
         if (voiceEnabled && routeSteps.length > 0) {
-  speak("Starting navigation. " + getInstructionText(routeSteps[0]));
+
+  const firstStep = routeSteps[0];
+
+  const firstDistanceFeet =
+    Math.round(firstStep.distance * 3.28084);
+
+  speak(
+    "Starting navigation. " +
+    getInstructionText(firstStep) +
+    " in " +
+    firstDistanceFeet +
+    " feet."
+  );
+
   lastSpokenStep = 0;
 }
 
