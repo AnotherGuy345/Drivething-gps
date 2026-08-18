@@ -229,6 +229,7 @@
     let watchId = null;
 
     let routeSteps = [];
+    let lastSpokenStep = -1;
 
     let currentStepIndex = 0;
 
@@ -859,6 +860,9 @@
   return;
 }
     if (distance <= 500) {
+      if (voiceEnabled) {
+  speak(instruction);
+}
 
   const maneuver =
     step.maneuver;
@@ -897,6 +901,22 @@
     "<span style='font-size:16px;font-weight:normal;'>" +
     Math.round(distance) +
     " ft</span>";
+      if (
+  voiceEnabled &&
+  lastSpokenStep !== currentStepIndex
+) {
+
+  speak(
+    instruction +
+    " in " +
+    Math.round(distance) +
+    " feet"
+  );
+
+  lastSpokenStep =
+    currentStepIndex;
+
+}
 
 }
 }
