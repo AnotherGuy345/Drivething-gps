@@ -847,99 +847,67 @@ lastRouteLongitude =
 
     function showNextTurn() {
 
-  if (
-    !routeSteps ||
-    routeSteps.length === 0
-  ) {
+      if (
+        !routeSteps ||
+        routeSteps.length === 0
+      ) {
 
-    nextTurn.textContent =
-      "🧭 Continue on route";
+        nextTurn.textContent =
+          "🧭 Continue on route";
 
-    return;
+        return;
 
-  }
+      }
 
-  const step =
-    routeSteps[currentStepIndex];
 
-  if (!step) {
+      const step =
+        routeSteps[
+          currentStepIndex
+        ];
 
-    nextTurn.textContent =
-      "🧭 Continue on route";
 
-    return;
+      const maneuver =
+        step.maneuver;
 
-  }
 
-  const maneuver =
-    step.maneuver;
+      let instruction =
+        "Continue";
 
-  let instruction =
-    "Continue";
 
-  if (maneuver.type === "turn") {
+      if (
+        maneuver.type === "turn"
+      ) {
 
-    instruction =
-      "Turn " +
-      (maneuver.modifier || "") +
-      " onto " +
-      (step.name || "the road");
+        instruction =
+          "Turn " +
+          (maneuver.modifier || "") +
+          " onto " +
+          (step.name ||
+            "the road");
 
-  }
+      }
 
-  else if (maneuver.type === "depart") {
 
-    instruction =
-      "Start on " +
-      (step.name || "the road");
+      else if (
+        maneuver.type === "depart"
+      ) {
 
-  }
+        instruction =
+          "Start on " +
+          (step.name ||
+            "the road");
 
-  else if (maneuver.type === "arrive") {
+      }
 
-    instruction =
-      "You have arrived";
 
-  }
+      else if (
+        maneuver.type === "arrive"
+      ) {
 
-  else if (maneuver.type === "roundabout") {
+        instruction =
+          "You have arrived";
 
-    instruction =
-      "Enter the roundabout";
-
-  }
-
-  const distanceFeet =
-    step.distance * 3.28084;
-
-  let distanceText;
-
-  if (distanceFeet >= 5280) {
-
-    distanceText =
-      (
-        distanceFeet / 5280
-      ).toFixed(1) +
-      " mi";
-
-  } else {
-
-    distanceText =
-      Math.round(distanceFeet) +
-      " ft";
-
-  }
-
-  nextTurn.innerHTML =
-    "🧭 " +
-    instruction +
-    "<br>" +
-    "<span style='font-size:18px;font-weight:normal;'>" +
-    distanceText +
-    " to next maneuver" +
-    "</span>";
-
-}
+      }
 
 
       else if (
