@@ -178,6 +178,9 @@
     <button id="voiceButton">
   🔊 Voice Guidance: OFF
 </button>
+    <button id="testTurnButton">
+  🧪 Test Next Turn
+</button>
 
     <div
       class="location"
@@ -1072,7 +1075,50 @@ function speak(text) {
   }
 
   return "Continue on route";
-} </script>
+} const testTurnButton =
+  document.getElementById("testTurnButton");
+
+testTurnButton.addEventListener(
+  "click",
+  function () {
+
+    if (
+      !routeSteps ||
+      routeSteps.length < 2
+    ) {
+
+      locationText.textContent =
+        "Create a route first.";
+
+      return;
+
+    }
+
+    if (
+      currentStepIndex <
+      routeSteps.length - 1
+    ) {
+
+      currentStepIndex++;
+
+      showNextTurn();
+
+      const nextStep =
+        routeSteps[currentStepIndex];
+
+      if (voiceEnabled) {
+
+        speak(
+          getInstructionText(nextStep)
+        );
+
+      }
+
+    }
+
+  }
+);
+  </script>
 
 </body>
 </html>
