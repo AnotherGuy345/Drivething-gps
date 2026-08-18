@@ -295,6 +295,20 @@ searchButton.addEventListener("click", async function () {
     }
 
     const route = data.routes[0];
+    const steps = route.legs[0].steps;
+
+const nextTurn =
+  document.getElementById("nextTurn");
+
+if (steps.length > 0) {
+
+  const instruction =
+    steps[0].maneuver.instruction ||
+    "Continue on route";
+
+  nextTurn.textContent =
+    "🧭 " + instruction;
+}
 
     if (window.routeLine) {
       map.removeLayer(window.routeLine);
