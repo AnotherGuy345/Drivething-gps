@@ -279,6 +279,53 @@ recalculateButton.addEventListener(
 
     }
 
+    if (
+      destinationLatitude === null ||
+      destinationLongitude === null
+    ) {
+
+      locationText.textContent =
+        "Choose a destination first.";
+
+      return;
+
+    }
+
+    if (routeLine) {
+
+      map.removeLayer(routeLine);
+
+      routeLine = null;
+
+    }
+
+    locationText.textContent =
+      "🔄 Recalculating route...";
+
+    drawRoute(
+      destinationLatitude,
+      destinationLongitude
+    );
+
+  }
+);
+
+recalculateButton.addEventListener(
+  "click",
+  function () {
+
+    if (
+      currentLatitude === null ||
+      currentLongitude === null
+    ) {
+
+      locationText.textContent =
+        "First tap Get My Location.";
+
+      return;
+
+    }
+
     if (!destinationMarker) {
 
       locationText.textContent =
