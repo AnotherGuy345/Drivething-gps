@@ -236,6 +236,9 @@
     let lastSpokenStep = -1;
 
     let currentStepIndex = 0;
+    let autoReroute = true;
+let lastRouteLatitude = null;
+let lastRouteLongitude = null;
 
 
     /* PAGE ELEMENTS */
@@ -1005,6 +1008,30 @@ function getDistanceFeet(
 
 const voiceButton =
   document.getElementById("voiceButton");
+    const rerouteButton =
+  document.getElementById("rerouteButton");
+
+rerouteButton.addEventListener(
+  "click",
+  function () {
+
+    autoReroute =
+      !autoReroute;
+
+    if (autoReroute) {
+
+      rerouteButton.textContent =
+        "🔄 Auto Reroute: ON";
+
+    } else {
+
+      rerouteButton.textContent =
+        "⏸️ Auto Reroute: OFF";
+
+    }
+
+  }
+);
 
 voiceButton.addEventListener(
   "click",
