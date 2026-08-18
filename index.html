@@ -257,6 +257,8 @@ let lastRouteLongitude = null;
 
     const destinationInput =
       document.getElementById("destination");
+    const recalculateButton =
+  document.getElementById("recalculateButton");
 
     const locationText =
       document.getElementById("location");
@@ -1113,7 +1115,41 @@ function speak(text) {
   return "Continue on route";
 } 
   
-  </script>
+ recalculateButton.addEventListener(
+  "click",
+  function () {
+
+    if (
+      currentLatitude === null ||
+      currentLongitude === null
+    ) {
+
+      locationText.textContent =
+        "First tap Get My Location.";
+
+      return;
+
+    }
+
+    if (!destinationMarker) {
+
+      locationText.textContent =
+        "Choose a destination first.";
+
+      return;
+
+    }
+
+    const destination =
+      destinationMarker.getLatLng();
+
+    drawRoute(
+      destination.lat,
+      destination.lng
+    );
+
+  }
+); </script>
 
 </body>
 </html>
