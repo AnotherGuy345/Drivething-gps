@@ -407,7 +407,6 @@ let lastRouteLongitude = null;
             currentLongitude =
               position.coords.longitude;
             checkNextTurn();
-            checkOffRoute();
 
 
             if (currentMarker) {
@@ -1110,37 +1109,7 @@ function speak(text) {
 
   return "Continue on route";
 } 
-  function checkOffRoute() {
-
-  if (!autoReroute) {
-    return;
-  }
-
-  if (
-    currentLatitude === null ||
-    currentLongitude === null ||
-    lastRouteLatitude === null ||
-    lastRouteLongitude === null
-  ) {
-    return;
-  }
-
-  const distance =
-    getDistanceFeet(
-      currentLatitude,
-      currentLongitude,
-      lastRouteLatitude,
-      lastRouteLongitude
-    );
-
-  if (distance > 1000) {
-
-    locationText.textContent =
-      "🔄 You may be off route.";
-
-  }
-
-}
+  
   </script>
 
 </body>
