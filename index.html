@@ -302,9 +302,30 @@ const nextTurn =
 
 if (steps.length > 0) {
 
-  const instruction =
-    steps[0].maneuver.instruction ||
-    "Continue on route";
+  const maneuver = steps[0].maneuver;
+
+let instruction = "Continue";
+
+if (maneuver.type === "turn") {
+  instruction =
+    "Turn " + (maneuver.modifier || "") +
+    " onto " + (steps[0].name || "the road");
+}
+
+else if (maneuver.type === "depart") {
+  instruction =
+    "Start on " + (steps[0].name || "the road");
+}
+
+else if (maneuver.type === "arrive") {
+  instruction =
+    "You have arrived at your destination";
+}
+
+else if (maneuver.type === "roundabout") {
+  instruction =
+    "Enter the roundabout";
+}
 
   nextTurn.textContent =
     "🧭 " + instruction;
