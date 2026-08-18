@@ -223,6 +223,7 @@ searchButton.addEventListener("click", async function () {
         .addTo(map)
         .bindPopup(place.display_name)
         .openPopup();
+    drawRoute(latitude, longitude);
 
     locationText.textContent =
       "Destination found.";
@@ -235,6 +236,66 @@ searchButton.addEventListener("click", async function () {
   }
 
 });
+  async function drawRoute(destinationLatitude, destinationLongitude) {
+
+  if (currentLatitude === null || currentLongitude === null) {
+    locationText.textContent =
+      "First tap Get My Location.";
+    return;
+  }
+
+  locationText.textContent =
+    "Calculating route...";
+
+  const routeURL =
+    "https://router.project-osrm.org/route/v1/driving/" +
+    currentLongitude + "," + currentLatitude +
+    ";" +
+    destinationLongitude + "," + destinationLatitude +
+    "?overview=full&geometries=geojson";
+
+  try {
+
+    const response = await fetch(routeURL);
+    const data = await response.json();
+
+    if (!data.routes || data.routes.length === 0) {
+      locationText.textContent =
+        "No driving route found.";
+      return;
+    }
+
+    const route = data.routes[0];
+
+    if (window.routeLine) {
+      map.removeLayer(window.routeLine);
+    }
+
+    window.routeLine =
+      L.geoJSON(route.geometry).addTo(map);
+
+    map.fitBounds(
+      window.routeLine.getBounds(),
+      { padding: [30, 30] }
+    );
+
+    const miles =
+      (route.distance / 1609.34).toFixed(1);
+
+    const minutes =
+      Math.round(route.duration / 60);
+
+    locationText.textContent =
+      miles + " miles • " +
+      minutes + " minutes";
+
+  } catch (error) {
+
+    locationText.textContent =
+      "Unable to calculate route.";
+
+  }
+}
   </script>
 
 </body>
