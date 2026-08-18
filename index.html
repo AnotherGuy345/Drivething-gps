@@ -236,6 +236,7 @@
     let watchId = null;
 
     let routeSteps = [];
+    let routeCoordinates = [];
     let lastSpokenStep = -1;
 
     let currentStepIndex = 0;
@@ -629,6 +630,8 @@ let lastRouteLongitude = null;
 
         const route =
           data.routes[0];
+        routeCoordinates =
+  route.geometry.coordinates;
         lastRouteLatitude =
   currentLatitude;
 
