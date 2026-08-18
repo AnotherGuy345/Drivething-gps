@@ -316,6 +316,17 @@ searchButton.addEventListener("click", async function () {
     }
 
     const route = data.routes[0];
+    const routeInfo =
+  document.getElementById("routeInfo");
+
+const miles =
+  (route.distance / 1609.34).toFixed(1);
+
+const minutes =
+  Math.round(route.duration / 60);
+
+routeInfo.textContent =
+  miles + " mi • " + minutes + " min";
     const steps = route.legs[0].steps;
 
 const nextTurn =
