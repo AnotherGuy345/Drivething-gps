@@ -624,6 +624,7 @@
 
 
         currentStepIndex = 0;
+        lastSpokenStep = -1;
 
 
         /* ROUTE LINE */
@@ -676,6 +677,10 @@
         /* NEXT TURN */
 
         showNextTurn();
+        if (voiceEnabled && routeSteps.length > 0) {
+  speak("Starting navigation. " + getInstructionText(routeSteps[0]));
+  lastSpokenStep = 0;
+}
 
 
         locationText.textContent =
@@ -1010,6 +1015,31 @@ function speak(text) {
     message
   );
 
+} function getInstructionText(step) {
+
+  const maneuver = step.maneuver;
+
+  if (maneuver.type === "turn") {
+    return "Turn " +
+      (maneuver.modifier || "") +
+      " onto " +
+      (step.name || "the road");
+  }
+
+  if (maneuver.type === "depart") {
+    return "Start on " +
+      (step.name || "the road");
+  }
+
+  if (maneuver.type === "arrive") {
+    return "You have arrived";
+  }
+
+  if (maneuver.type === "roundabout") {
+    return "Enter the roundabout";
+  }
+
+  return "Continue on route";
 } </script>
 
 </body>
