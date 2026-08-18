@@ -840,7 +840,22 @@
       turnLongitude
     );
 
-  if (distance <= 500) {
+  if (distance < 100) {
+
+  if (
+    currentStepIndex <
+    routeSteps.length - 1
+  ) {
+
+    currentStepIndex++;
+
+    showNextTurn();
+
+  }
+
+  return;
+}
+    if (distance <= 500) {
 
   const maneuver =
     step.maneuver;
