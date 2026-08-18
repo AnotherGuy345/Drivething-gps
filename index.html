@@ -137,6 +137,9 @@ body.light-mode .location {
     let currentMarker = null;
     let currentLatitude = null;
 let currentLongitude = null;
+    let watchId = null;
+let currentStepIndex = 0;
+let routeSteps = [];
     let destinationMarker = null;
 
     const gpsButton = document.getElementById("gpsButton");
