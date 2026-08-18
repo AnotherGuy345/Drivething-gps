@@ -175,6 +175,9 @@
     <button id="themeButton">
       ☀️ Light / 🌙 Dark
     </button>
+    <button id="voiceButton">
+  🔊 Voice Guidance: OFF
+</button>
 
     <div
       class="location"
@@ -937,7 +940,57 @@ function getDistanceFeet(
 
   return R * c;
 }
-  </script>
+ let voiceEnabled = false;
+
+const voiceButton =
+  document.getElementById("voiceButton");
+
+voiceButton.addEventListener(
+  "click",
+  function () {
+
+    voiceEnabled =
+      !voiceEnabled;
+
+    if (voiceEnabled) {
+
+      voiceButton.textContent =
+        "🔊 Voice Guidance: ON";
+
+      speak("Voice guidance enabled.");
+
+    } else {
+
+      voiceButton.textContent =
+        "🔇 Voice Guidance: OFF";
+
+      speechSynthesis.cancel();
+
+    }
+
+  }
+);
+
+
+function speak(text) {
+
+  if (!voiceEnabled) {
+    return;
+  }
+
+  speechSynthesis.cancel();
+
+  const message =
+    new SpeechSynthesisUtterance(text);
+
+  message.rate = 0.9;
+  message.pitch = 1;
+
+  speechSynthesis.speak(
+    message
+  );
+
+} </script>
 
 </body>
 </html>
