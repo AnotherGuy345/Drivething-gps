@@ -327,8 +327,26 @@ else if (maneuver.type === "roundabout") {
     "Enter the roundabout";
 }
 
-  nextTurn.textContent =
-    "🧭 " + instruction;
+  const distanceFeet =
+  steps[0].distance * 3.28084;
+
+let distanceText;
+
+if (distanceFeet >= 5280) {
+  distanceText =
+    (distanceFeet / 5280).toFixed(1) +
+    " mi";
+} else {
+  distanceText =
+    Math.round(distanceFeet) +
+    " ft";
+}
+
+nextTurn.innerHTML =
+  "🧭 " + instruction +
+  "<br><span style='font-size:16px; font-weight:normal;'>" +
+  distanceText +
+  " to next maneuver</span>";
 }
 
     if (window.routeLine) {
