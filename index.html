@@ -150,7 +150,7 @@ const destinationInput =
   document.getElementById("destination");
     const locationText = document.getElementById("location");
 
-    gpsButton.addEventListener("click", function () {
+    gpsButton.addEventListener("click", function (navigator.geolocation.getCurrentPosition) {
 
       if (!navigator.geolocation) {
         locationText.textContent =
@@ -388,7 +388,58 @@ themeButton.addEventListener("click", function () {
 
   document.body.classList.toggle("light-mode");
 
-}); </script>
+});function startLiveGPS() {
+
+  if (!navigator.geolocation) {
+    locationText.textContent =
+      "GPS is not supported.";
+    return;
+  }
+
+  if (watchId !== null) {
+    navigator.geolocation.clearWatch(watchId);
+  }
+
+  watchId = navigator.geolocation.watchPosition(
+
+    function(position) {
+
+      currentLatitude =
+        position.coords.latitude;
+
+      currentLongitude =
+        position.coords.longitude;
+
+      if (currentMarker) {
+        map.removeLayer(currentMarker);
+      }
+
+      currentMarker = L.marker([
+        currentLatitude,
+        currentLongitude
+      ]).addTo(map);
+
+      currentMarker
+        .bindPopup("You are here");
+
+    },
+
+    function(error) {
+
+      locationText.textContent =
+        "Live GPS error: " + error.message;
+      startLiveGPS();
+
+    },
+
+    {
+      enableHighAccuracy: true,
+      maximumAge: 2000,
+      timeout: 10000
+    }
+
+  );
+} </script>
 
 </body>
 </html>
