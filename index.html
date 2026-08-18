@@ -413,6 +413,7 @@ let lastRouteLongitude = null;
             currentLongitude =
               position.coords.longitude;
             checkNextTurn();
+            checkActualRoute();
 
 
             if (currentMarker) {
@@ -1152,7 +1153,49 @@ function speak(text) {
     );
 
   }
-); </script>
+); function checkActualRoute() {
+
+  if (!autoReroute) {
+    return;
+  }
+
+  if (
+    !routeCoordinates ||
+    routeCoordinates.length === 0 ||
+    currentLatitude === null ||
+    currentLongitude === null
+  ) {
+    return;
+  }
+
+  let closestDistance = Infinity;
+
+  for (const point of routeCoordinates) {
+
+    const routeLongitude = point[0];
+    const routeLatitude = point[1];
+
+    const distance = getDistanceFeet(
+      currentLatitude,
+      currentLongitude,
+      routeLatitude,
+      routeLongitude
+    );
+
+    if (distance < closestDistance) {
+      closestDistance = distance;
+    }
+  }
+
+  if (closestDistance > 500) {
+
+    locationText.textContent =
+      "🔄 You may be off route.";
+
+  }
+
+}
+  </script>
 
 </body>
 </html>
