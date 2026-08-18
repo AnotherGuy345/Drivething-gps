@@ -483,7 +483,8 @@ recalculateButton.addEventListener(
             currentLongitude =
               position.coords.longitude;
             checkNextTurn();
-            checkActualRoute();
+checkActualRoute();
+checkArrival();
 
 
             if (currentMarker) {
@@ -1030,7 +1031,46 @@ lastRouteLongitude =
 
 }
 
+function checkArrival() {
 
+  if (
+    destinationLatitude === null ||
+    destinationLongitude === null ||
+    currentLatitude === null ||
+    currentLongitude === null
+  ) {
+    return;
+  }
+
+  const distance =
+    getDistanceFeet(
+      currentLatitude,
+      currentLongitude,
+      destinationLatitude,
+      destinationLongitude
+    );
+
+  if (distance <= 150) {
+
+    nextTurn.textContent =
+      "🏁 You have arrived!";
+
+    routeInfo.textContent =
+      "Destination reached.";
+
+    locationText.textContent =
+      "🏁 You have arrived.";
+
+    if (voiceEnabled) {
+      speak("You have arrived.");
+    }
+
+    currentStepIndex =
+      routeSteps.length;
+
+  }
+
+}
 function getDistanceFeet(
   lat1,
   lon1,
