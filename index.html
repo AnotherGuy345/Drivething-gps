@@ -842,13 +842,45 @@
 
   if (distance <= 500) {
 
-    nextTurn.innerHTML =
-      "⚠️ TURN COMING UP<br>" +
-      "<span style='font-size:16px;font-weight:normal;'>" +
-      Math.round(distance) +
-      " ft</span>";
+  const maneuver =
+    step.maneuver;
+
+  let instruction =
+    "Continue";
+
+  if (maneuver.type === "turn") {
+
+    instruction =
+      "Turn " +
+      (maneuver.modifier || "") +
+      " onto " +
+      (step.name || "the road");
 
   }
+
+  else if (maneuver.type === "roundabout") {
+
+    instruction =
+      "Enter the roundabout";
+
+  }
+
+  else if (maneuver.type === "arrive") {
+
+    instruction =
+      "You have arrived";
+
+  }
+
+  nextTurn.innerHTML =
+    "⚠️ " +
+    instruction +
+    "<br>" +
+    "<span style='font-size:16px;font-weight:normal;'>" +
+    Math.round(distance) +
+    " ft</span>";
+
+}
 }
 
 
