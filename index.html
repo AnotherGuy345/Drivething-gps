@@ -64,7 +64,23 @@
       color: #aaa;
       font-size: 14px;
     }
-  </style>
+ body.light-mode {
+  background: #f2f2f2;
+  color: #111;
+}
+
+body.light-mode .top {
+  background: #ffffff;
+}
+
+body.light-mode .controls {
+  background: #ffffff;
+}
+
+body.light-mode .status,
+body.light-mode .location {
+  color: #555;
+} </style>
 </head>
 
 <body>
@@ -77,6 +93,9 @@
   <div id="map"></div>
 
   <div class="controls">
+   <button id="themeButton" style="margin-bottom:10px;">
+  ☀️ Light / 🌙 Dark
+</button> 
     <button id="gpsButton">
       📍 Get My Location
     <input
@@ -296,7 +315,14 @@ searchButton.addEventListener("click", async function () {
 
   }
 }
-  </script>
+ const themeButton =
+  document.getElementById("themeButton");
+
+themeButton.addEventListener("click", function () {
+
+  document.body.classList.toggle("light-mode");
+
+}); </script>
 
 </body>
 </html>
