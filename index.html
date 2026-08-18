@@ -395,6 +395,7 @@
 
             currentLongitude =
               position.coords.longitude;
+            checkNextTurn();
 
 
             if (currentMarker) {
@@ -807,6 +808,88 @@
 
     }
 
+  function checkNextTurn() {
+
+  if (
+    !routeSteps ||
+    routeSteps.length === 0 ||
+    currentLatitude === null ||
+    currentLongitude === null
+  ) {
+    return;
+  }
+
+  const step =
+    routeSteps[currentStepIndex];
+
+  if (!step) {
+    return;
+  }
+
+  const turnLatitude =
+    step.maneuver.location[1];
+
+  const turnLongitude =
+    step.maneuver.location[0];
+
+  const distance =
+    getDistanceFeet(
+      currentLatitude,
+      currentLongitude,
+      turnLatitude,
+      turnLongitude
+    );
+
+  if (distance <= 500) {
+
+    nextTurn.innerHTML =
+      "⚠️ TURN COMING UP<br>" +
+      "<span style='font-size:16px;font-weight:normal;'>" +
+      Math.round(distance) +
+      " ft</span>";
+
+  }
+}
+
+
+function getDistanceFeet(
+  lat1,
+  lon1,
+  lat2,
+  lon2
+) {
+
+  const R = 20902260;
+
+  const dLat =
+    (lat2 - lat1) *
+    Math.PI / 180;
+
+  const dLon =
+    (lon2 - lon1) *
+    Math.PI / 180;
+
+  const a =
+    Math.sin(dLat / 2) *
+    Math.sin(dLat / 2) +
+    Math.cos(
+      lat1 * Math.PI / 180
+    ) *
+    Math.cos(
+      lat2 * Math.PI / 180
+    ) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
+
+  const c =
+    2 *
+    Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1 - a)
+    );
+
+  return R * c;
+}
   </script>
 
 </body>
