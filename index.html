@@ -135,6 +135,8 @@ const destinationInput =
 
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
+          currentLatitude = latitude;
+currentLongitude = longitude;
 
           map.setView([latitude, longitude], 16);
 
