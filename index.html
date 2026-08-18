@@ -873,6 +873,25 @@
 
     showNextTurn();
 
+    const nextStep =
+      routeSteps[currentStepIndex];
+
+    if (voiceEnabled) {
+
+      const nextDistanceFeet =
+        Math.round(
+          nextStep.distance * 3.28084
+        );
+
+      speak(
+        getInstructionText(nextStep) +
+        " in " +
+        nextDistanceFeet +
+        " feet."
+      );
+
+    }
+
   }
 
   return;
