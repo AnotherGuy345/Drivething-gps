@@ -226,6 +226,8 @@
     let currentMarker = null;
 
     let destinationMarker = null;
+    let destinationLatitude = null;
+let destinationLongitude = null;
 
     let routeLine = null;
 
@@ -577,6 +579,11 @@ recalculateButton.addEventListener(
           }
 
 
+          destinationLatitude =
+  latitude;
+
+destinationLongitude =
+  longitude;
           destinationMarker =
             L.marker([
               latitude,
