@@ -327,30 +327,7 @@ recalculateButton.addEventListener(
   }
 );
 
-recalculateButton.addEventListener(
-  "click",
-  function () {
 
-    if (
-      currentLatitude === null ||
-      currentLongitude === null
-    ) {
-
-      locationText.textContent =
-        "First tap Get My Location.";
-
-      return;
-
-    }
-
-    if (!destinationMarker) {
-
-      locationText.textContent =
-        "Choose a destination first.";
-
-      return;
-
-    }
 
     const destination =
       destinationMarker.getLatLng();
@@ -1229,30 +1206,7 @@ function speak(text) {
   return "Continue on route";
 } 
   
- recalculateButton.addEventListener(
-  "click",
-  function () {
-
-    if (
-      currentLatitude === null ||
-      currentLongitude === null
-    ) {
-
-      locationText.textContent =
-        "First tap Get My Location.";
-
-      return;
-
-    }
-
-    if (!destinationMarker) {
-
-      locationText.textContent =
-        "Choose a destination first.";
-
-      return;
-
-    }
+ 
 
     const destination =
       destinationMarker.getLatLng();
