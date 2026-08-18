@@ -1193,29 +1193,7 @@ function speak(text) {
   offRouteCount++;
 
   locationText.textContent =
-    "🔄 Checking route..."; if (offRouteCount >= 3) {
-
-  offRouteCount = 0;
-
-  if (
-    destinationMarker &&
-    autoReroute
-  ) {
-
-    const destination =
-      destinationMarker.getLatLng();
-
-    locationText.textContent =
-      "🔄 Recalculating route...";
-
-    drawRoute(
-      destination.lat,
-      destination.lng
-    );
-
-  }
-
-}
+    "🔄 Checking route...";
 
 } else {
 
