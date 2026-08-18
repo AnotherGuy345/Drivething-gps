@@ -1284,19 +1284,52 @@ function speak(text) {
 
   if (closestDistance > 500) {
 
-    offRouteCount++;
+  offRouteCount++;
 
-    locationText.textContent =
-      "🔄 Checking route...";
+  locationText.textContent =
+    "🔄 Checking route...";
 
-  } else {
+  if (offRouteCount >= 3) {
 
-    offRouteCount = 0;
+    const now =
+      Date.now();
 
-    locationText.textContent =
-      "On route.";
+    if (
+      now - lastRerouteTime >
+      30000
+    ) {
+
+      lastRerouteTime = now;
+
+      offRouteCount = 0;
+
+      if (
+        destinationLatitude !== null &&
+        destinationLongitude !== null
+      ) {
+
+        locationText.textContent =
+          "🔄 Recalculating route...";
+
+        drawRoute(
+          destinationLatitude,
+          destinationLongitude
+        );
+
+      }
+
+    }
 
   }
+
+} else {
+
+  offRouteCount = 0;
+
+  locationText.textContent =
+    "On route.";
+
+}
 
 }
   </script>
