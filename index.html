@@ -394,7 +394,10 @@ recalculateButton.addEventListener(
 
           currentLongitude =
             position.coords.longitude;
-
+map.setView(
+  [currentLatitude, currentLongitude],
+  17
+);
 
           if (currentMarker) {
 
