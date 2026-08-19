@@ -934,15 +934,14 @@ lastRouteLongitude =
 
 
       nextTurn.innerHTML =
-        "🧭 " +
-        instruction +
-        "<br>" +
-        "<span style='font-size:16px;font-weight:normal;'>" +
-        distanceText +
-        " to next maneuver" +
-        "</span>";
-
-    }
+  "<div style='font-size:24px;font-weight:bold;line-height:1.25;'>" +
+  "🧭 " +
+  instruction +
+  "</div>" +
+  "<div style='font-size:20px;font-weight:bold;margin-top:8px;'>" +
+  distanceText +
+  " to next maneuver" +
+  "</div>";
 
   function checkNextTurn() {
 
