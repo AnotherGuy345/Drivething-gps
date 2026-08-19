@@ -409,14 +409,24 @@ map.setView(
 
 
           currentMarker =
-            L.marker([
-              currentLatitude,
-              currentLongitude
-            ])
-            .addTo(map)
-            .bindPopup(
-              "You are here"
-            );
+  L.marker(
+    [
+      currentLatitude,
+      currentLongitude
+    ],
+    {
+      icon: L.divIcon({
+        className: "car-marker",
+        html: "🚗",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20]
+      })
+    }
+  )
+  .addTo(map)
+  .bindPopup(
+    "You are here"
+  );
 
 
           map.setView(
