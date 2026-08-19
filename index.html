@@ -577,6 +577,18 @@ map.setView(
             checkNextTurn();
 checkActualRoute();
 checkArrival();
+if (routeSteps.length > 0) {
+  map.panTo(
+    [
+      currentLatitude,
+      currentLongitude
+    ],
+    {
+      animate: true,
+      duration: 0.5
+    }
+  );
+}
 
 
             if (currentMarker) {
