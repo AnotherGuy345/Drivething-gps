@@ -744,12 +744,10 @@ lastRouteLongitude =
           ).addTo(map);
 
 
-        map.fitBounds(
-          routeLine.getBounds(),
-          {
-            padding: [30, 30]
-          }
-        );
+        map.setView(
+  [currentLatitude, currentLongitude],
+  17
+);
 
 
         /* ROUTE INFO */
