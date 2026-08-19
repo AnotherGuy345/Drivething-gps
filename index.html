@@ -749,9 +749,15 @@ lastRouteLongitude =
 
 
         routeLine =
-          L.geoJSON(
-            route.geometry
-          ).addTo(map);
+  L.geoJSON(
+    route.geometry,
+    {
+      style: {
+        weight: 7,
+        opacity: 0.9
+      }
+    }
+  ).addTo(map);
 
 
         map.setView(
